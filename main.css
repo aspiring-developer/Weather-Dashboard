@@ -1,0 +1,124 @@
+body {
+  background-color: #f2f3f3;
+}
+.main-wrapper-container {
+  
+  margin: 0 auto;
+  height: auto;
+}
+.header-container {
+   background-color: #007BFF;
+   color: white;
+   width: 100%;
+   padding:3rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+
+   
+}
+.header-container h1 {
+font-size: 3rem;
+font-weight: bold;
+}
+
+.header-container p {
+  font-size: 1.5rem;
+}
+.header-container p {
+ font-size: 1rem; 
+ color: #5ff6c4;
+}
+.searchFieldLabel {
+  display: block;
+  width: 100%;
+}
+.inputBox {
+  margin-top: .5rem;
+}
+
+.inputBox, .btn {
+ margin-top: .5rem;
+
+}
+.nestedLeftCol {
+  background-color: #ebf0f3;
+  margin: 1rem 0;
+  padding: .5rem;
+  padding-left: 1rem;
+}
+#alertMessage {
+  color: red;
+  font-size: .9rem;
+}
+.defaultParaTexts {
+  color: #999;
+  font-size: .7rem;
+}
+.top-content-col1 {
+ margin-top: 1rem;
+  background-color: #fafafa;
+  height: auto;
+  border: 1px solid #e0dfdf;
+}
+.top-content-col2 {
+ padding: 1rem;
+ margin-top: 1rem;
+ margin-left: 1rem;
+  background-color: #fafafa;
+  border: 1px solid #e0dfdf;
+}
+
+.bottom-content-col {
+  background-color: #fafafa;
+    margin-top: .2rem;
+    padding: 1.5rem;
+    border: 1px solid #e0dfdf;
+    text-align: center;
+
+}
+
+.footer-row {
+  justify-content: center; 
+  padding: 2rem; 
+  margin-top: 1rem;
+  background-color: #dfe4e6;
+ color: #666;
+  text-align:center; 
+  font-size: .8rem; 
+  align-items: center; 
+  text-align: center;
+  }
+  /* Dynamically updating elements section */
+  .dynamicH4 {
+color: #007BFF;
+font-size: 1rem;;
+font-weight: bold;
+text-transform: uppercase;
+  }
+.dynamicP {
+  color: #1d1e20;
+  font-family: Arial, Helvetica, sans-serif;
+ font-size: .8rem;
+  text-transform: capitalize;
+  margin: 10px 0; 
+}
+.dynamicNote {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .6rem;
+  color: #767b7c;
+}
+#cityInfoBox img {
+  margin-left: 20px;
+}
+.dailyForecastBox {
+  width: 18%;
+  height: 150px;
+  margin: 10px 0 10px 20px;
+  display:flex;
+  flex-direction: row;
+  background-color: #007BFF;
+  color: white;
+}
+  
