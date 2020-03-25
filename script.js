@@ -5,10 +5,9 @@ var todayDate = moment().format('LL');
 
 var futureDate1 = moment().format('l');  // 3/25/2020 format
 var futureDate2 = moment().add(1, 'days').calendar(); // Tomorrow at 4:57 PM
-var futureDate3  = moment().add(1,'days'); // 
 console.log(futureDate1);
 console.log(futureDate2);
-console.log(futureDate3);
+
 
 
 // Required document ready function (wrapper) to use jQuery
@@ -43,7 +42,7 @@ $(document).ready(function() {
  //The API gives temperature measurement in Kelvin, so changing it to fahrenheit
         var kelvinToFahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
  // Dynamically appending h4 and p html-elements, and displaying data in them
-        $("#cityInfoBox").append("<h4 class='dynamicH4'>" + response.name + " Weather Info: " + "&nbsp;&nbsp;&nbsp;&nbsp;  " + todayDate + "<img src='weather1.png'>" + "</h4>");
+        $("#cityInfoBox").append("<h4 class='dynamicH4'>" + response.name + "'s" + " Weather Info: " + "&nbsp;&nbsp;&nbsp;&nbsp;  " + todayDate + "<img src='weather1.png'>" + "</h4>");
         $("#cityInfoBox").append("<p class='dynamicP'>" + "Temperature in (F) : " + response.main.temp + "&deg;" + "</p>");
         $("#cityInfoBox").append("<p class='dynamicP'>" + "Temperature in (K) : " + kelvinToFahrenheit.toFixed(2) + "&deg;" +  "</p>");
         $("#cityInfoBox").append("<p class='dynamicP'>" + "Humidity : " + response.main.humidity + "%" + "</p>");
@@ -53,7 +52,7 @@ $(document).ready(function() {
  // Dynamically appending h4 that will display 5-day forecast header
         $("#forecastDiv").append("<h4 class='dynamicH4'>" + "5-Day Weather Forecast of " + response.name + "</h4>");
 
-        console.log(response.name + " Weather Info");
+        console.log(response.name + "'s" + " Weather Info");
         console.log("Wind Speed: " + response.wind.speed);
         console.log("Humidity: " + response.main.humidity);
         console.log("Temperature in Kelvin: " + kelvinToFahrenheit);
@@ -61,9 +60,15 @@ $(document).ready(function() {
 // ============== Working ok up to above line =================== //
 
 // $$$$$$$$$$$$$$$$$$$$ CURRENT WORK IN PROCESS BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
- for(i = 0; i < response.name; i++) {
-   var dailyForecast = $("#forecastDiv").append("<div class='dailyForecastBox'>" + futureDate + "<br>" + "<img src='weather1.png'>" + response.main.temp + "&deg;" + "<br>" + response.main.humidity + "</div>");
- }
+
+  //  $("#forecastDiv").append("<div class='dailyForecastBox'>" + futureDate1 + "<br>" + "<img src='weather1.png'>" + response.main.temp + "&deg;" + "<br>" + response.main.humidity + "</div>");
+   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
+   $(".dailyForecastBox").append("<p>" + futureDate2 + "</p>" + "<br>" + "<img src='weather1.png'>" + "<br>" + response.main.temp + "&deg;" + "<br>" + response.main.humidity + "</div>");
+   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
+   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
+   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
+   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
+
 
 
 // $$$$$$$$$$$$$$$$$$$$ WORK IN PROCESS BLOCK THIS LINE ABOVE $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
