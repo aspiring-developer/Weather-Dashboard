@@ -8,10 +8,24 @@ var futureDate2 = moment().add(1, 'days').calendar(); // Tomorrow at 4:57 PM
 console.log(futureDate1);
 console.log(futureDate2);
 
-
+// displayInList();
 
 // Required document ready function (wrapper) to use jQuery
 $(document).ready(function() {
+        function displayInList() {
+ 		// grab data from local storage
+ 		var cities = JSON.parse(localStorage.getItem('cities'));
+ 		// loop the data
+ 		for (i = 0; i < cities.length; i++) {
+ 			var city = cities[i];
+ 			//append cities to list container
+ 			$('#searchedCityList').append('<li>' + city + '</li>');
+ 			console.log(city);
+ 		}
+ 	}
+ displayInList();
+
+
   // Initially hiding alert message that set for no value entered in search field
   $('#alertMessage').hide();
   // Click handler of the search button
@@ -20,7 +34,16 @@ $(document).ready(function() {
 		$('#cityInfoBox').empty();
 		$('#forecastDiv').empty();
 
-		var citySearched = $('#searchField').val();
+              var citySearched = $('#searchField').val();
+              var cities = JSON.parse(localStorage.getItem('cities'));
+		if (cities) {
+			cities.push(citySearched);
+		} else {
+			cities = [citySearched];
+		}
+		console.log(cities);
+		localStorage.setItem('cities', JSON.stringify(cities));
+
 // Conditionally keep hiding or showing the alert message
 		if (!citySearched) {
 			$('#alertMessage').show();
@@ -60,21 +83,18 @@ $(document).ready(function() {
 // ============== Working ok up to above line =================== //
 
 // $$$$$$$$$$$$$$$$$$$$ CURRENT WORK IN PROCESS BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
-
-  //  $("#forecastDiv").append("<div class='dailyForecastBox'>" + futureDate1 + "<br>" + "<img src='weather1.png'>" + response.main.temp + "&deg;" + "<br>" + response.main.humidity + "</div>");
-   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
-   $(".dailyForecastBox").append("<p>" + futureDate2 + "</p>" + "<br>" + "<img src='weather1.png'>" + "<br>" + response.main.temp + "&deg;" + "<br>" + response.main.humidity + "</div>");
-   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
-   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
-   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
-   $("#forecastDiv").append("<div class='dailyForecastBox'>" + "</div>");
-
-
+$("#forecastDiv").append("<div id='forecastBoxesWrapper'>" + "</div>");
+   $("#forecastBoxesWrapper").append("<div class='dailyForecastBox'>" + "</div>");
+   $(".dailyForecastBox").append("<p>" + futureDate2 + "</p>" + "<img src='weather1.png'>" + "<br>" + "<p>" + "Temp: " +  response.main.temp + "&deg;" + "<br>" + "Temp: " + response.main.humidity + " MPH" + "</p>" + "</div>");
 
 // $$$$$$$$$$$$$$$$$$$$ WORK IN PROCESS BLOCK THIS LINE ABOVE $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
       });
      
-	});
+     
+       });
+       // displayInList();    
+
+
 }); // document ready function (wrapper) ends here.
