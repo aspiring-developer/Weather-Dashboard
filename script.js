@@ -8,22 +8,22 @@ var futureDate2 = moment()
 	.add(1, 'days')
 	.calendar(); // Tomorrow at 4:57 PM
 
-	//displayInList();
+//displayInList();
 
 // Required document ready function (wrapper) to use jQuery
 $(document).ready(function() {
 	function displayInList() {
 		// grab data from local storage
 		var cities = JSON.parse(localStorage.getItem('cities'));
-		if(!cities) {
-cities =[];
+		if (!cities) {
+			cities = [];
 		}
 		// loop the data
 		for (i = 0; i < cities.length; i++) {
 			var city = cities[i];
 			//append cities to list container
 			$('#searchedCityList').append('<li>' + city + '</li>');
-				}
+		}
 	}
 	displayInList();
 
@@ -50,64 +50,84 @@ cities =[];
 			$('#alertMessage').show();
 		} else {
 			queryURL =
-				'https://api.openweathermap.org/data/2.5/weather?q=' + citySearched + '&units=Imperial&appid=' + APIKey;
+				'https://api.openweathermap.org/data/2.5/weather?q=' +
+				citySearched +
+				'&units=Imperial&appid=' +
+				APIKey;
 
-				$('#alertMessage').hide();
+			$('#alertMessage').hide();
 		}
-		
+
 		// NEW API CALL for 5 Days
-		var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + citySearched + '&appid=' + APIKey;
+		var queryURL2 =
+			'https://api.openweathermap.org/data/2.5/forecast?q=' +
+			citySearched +
+			'&appid=' +
+			APIKey;
 		$.ajax({
 			url: queryURL2,
 			method: 'GET'
-		})
-
-.then(function(response) {
-	console.log(response);
-console.log(response.city.name);
-console.log(response.list[3].main.temp);
-console.log(response.list[3].main.humidity);
-
-				// $$$$$$$$$$$$$$$$$$$$ CURRENT WORK IN PROCESS BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-				 
-				 var kelvinConverter = (response.list[3].main.temp - 273.15) * 1.8 + 32;
-				//  kelvinConverter = kelvinConverter.Math.float();
-var kelvinConverted = kelvinConverter.toFixed(2);
-				 console.log(kelvinConverted);
+		}).then(function(response) {
 		
-				 // Dynamically appending h4 that will display 5-day forecast header
-					$('#forecastDiv').append(
-						"<h4 class='dynamicH4'>" +
-							'5-Day Weather Forecast of ' +
-							response.city.name +
-							'</h4>'
-					);
+			// $$$$$$$$$$$$$$$$$$$$ CURRENT WORK IN PROCESS BLOCK $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+				// Dynamically creating and appending a wrapper div that will 5-day forecast boxes
 				$('#forecastDiv').append("<div id='forecastBoxesWrapper'>" + '</div>');
+				// Dynamically creating and appending a container div that will display 5-day forecast 
 				$('#forecastBoxesWrapper').append(
-					"<div class='dailyForecastBox'>" + '</div>'
-				);
-				$('.dailyForecastBox').append(
-					'<p>' +
-						futureDate2 +
-						'</p>' +
-						"<img src='weather1.png'>" +
-						'<br>' +
-						'<p>' +
-						'Temp: ' +
-						kelvinConverted +
-						'&deg;' + 
-						'<br>' +
-						'Humidity: ' +
-						response.list[3].main.humidity +
-						'%' +
-						'</p>' +
-						'</div>'
+					"<div class='dailyForecastBox'>" + "</div>"
+				);// looping the 5-day forecast data
+
+			var myList = response.list.length;
+			for (var i = 0; i < myList; i += 8) {
+				var dateFromAPI = response.list[i].dt_txt.substring(0, 10);
+				nextDayDate = moment(dateFromAPI).format('MM/DD/YYYY');
+				console.log(dateFromAPI);
+				console.log(response.list[i].dt_txt);
+				console.log(response.list[i].main.temp);
+				console.log(response.list[i].weather[0].icon);
+				console.log(response.list[i].main.humidity);
+				console.log(response);
+				console.log(nextDayDate);
+				$('#forecastBoxesWrapper').append(
+					"<div class='dailyForecastBox'>" + nextDayDate + imageIconURL + kelvinConverted +
+					response.list[i].main.humidity + "</div>"
 
 				);
+				var imageIconURL =
+				'http://openweathermap.org/img/wn/' +
+				response.list[i].weather[0].icon +
+				'.png';
+			var kelvinConverter = (response.list[i].main.temp - 273.15) * 1.8 + 32;
+			var kelvinConverted = kelvinConverter.toFixed(2);
+			console.log(imageIconURL);
+			$('.dailyForecastBox').append('<p>' +	nextDayDate +	'</p>' + '<img src=' + imageIconURL +	'/>' + '<br>' +	'<p>' +	'Temp: ' + kelvinConverted + '&deg;' + '<br>' +	'Humidity: ' +	response.list[i].main.humidity + '%' + '</p>' +	'</div>'
+			);
 
-				// $$$$$$$$$$$$$$$$$$$$ WORK IN PROCESS BLOCK THIS LINE ABOVE $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-});
-// NEW API CALL ABOVE
+			}
+
+			// Dynamically appending h4 that will display 5-day forecast header
+			$('#forecastDiv').append(
+				"<h4 class='dynamicH4'>" +
+					'5-Day Weather Forecast of ' +
+					response.city.name +
+					'</h4>'
+			);
+		
+
+			// http://openweathermap.org/img/wn/10d@2x.png
+
+			// var imageIconURL =
+			// 	'http://openweathermap.org/img/wn/' +
+			// 	response.list[i].weather[0].icon +
+			// 	'.png';
+			// var kelvinConverter = (response.list[i].main.temp - 273.15) * 1.8 + 32;
+			// var kelvinConverted = kelvinConverter.toFixed(2);
+			// console.log(imageIconURL);
+		
+
+			// $$$$$$$$$$$$$$$$$$$$ WORK IN PROCESS BLOCK THIS LINE ABOVE $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		});
+		// NEW API CALL ABOVE
 
 		$.ajax({
 			url: queryURL,
@@ -115,8 +135,6 @@ var kelvinConverted = kelvinConverter.toFixed(2);
 		})
 			// Store all retrieved data in "response" object.
 			.then(function(response) {
-				console.log('Working codes above!'); // Working fine!
-				// console.log(response);
 				//The API gives temperature measurement in Kelvin, so changing it to fahrenheit
 				var kelvinToFahrenheit = (response.main.temp - 273.15) * 1.8 + 32;
 
@@ -167,17 +185,7 @@ var kelvinConverted = kelvinConverter.toFixed(2);
 						'** F: Fahrenheit, K: Kelvin temperature measurement' +
 						'</p>'
 				);
-			
 
-				// console.log(response.name + "'s" + ' Weather Info');
-				// console.log('Wind Speed: ' + response.wind.speed);
-				// console.log('Humidity: ' + response.main.humidity);
-				// console.log('Temperature in Kelvin: ' + kelvinToFahrenheit);
-				// console.log('Temperature in Fahrenheit: ' + response.main.temp);
-				// ============== Working ok up to above line =================== //
-
-			});
+						});
 	});
-
-
 }); // document ready function (wrapper) ends here.
