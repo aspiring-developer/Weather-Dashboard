@@ -120,7 +120,7 @@ body {
 	color: white;
   text-align: center;
 	width: 20%;
-	height: 200px;
+	height: auto;
 margin-left: 1rem;
 display: flex;
 flex-direction: column;
@@ -129,7 +129,18 @@ align-items: center;
 
   
 } 
-.dailyForecastBox img {
+/* .dailyForecastBox img {
 padding: 1rem;
+} */
+/* 
+.icon {
+	background-color: yellow;
+	width: 200px;
+	height: 200px;
+	font-size: 1rem;
 }
+.icon img{
 
+	width: 50px;
+	height: auto;
+} */
