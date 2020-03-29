@@ -100,8 +100,14 @@ body {
 	font-size: 0.6rem;
 	color: #767b7c;
 }
+#cityInfoBox {
+background-color: #eff5f4;
+}
 #cityInfoBox img {
 	margin-left: 20px;
+	box-shadow: 5px 10px 10px rgba(140, 143, 149, 0.4);
+	background-color: #a6c6e9;
+	border-radius: 10px;
 }
 
 #forecastBoxesWrapper {
@@ -129,18 +135,3 @@ align-items: center;
 
   
 } 
-/* .dailyForecastBox img {
-padding: 1rem;
-} */
-/* 
-.icon {
-	background-color: yellow;
-	width: 200px;
-	height: 200px;
-	font-size: 1rem;
-}
-.icon img{
-
-	width: 50px;
-	height: auto;
-} */
