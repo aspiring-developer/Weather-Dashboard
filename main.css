@@ -53,7 +53,7 @@ body {
 	margin-left: 1rem;
 }
 
-.bottom-content-col-1  {
+.bottom-content-col-1 {
 	background-color: #fafafa;
 	margin-top: 1rem;
 	margin-bottom: 0;
@@ -101,37 +101,75 @@ body {
 	color: #767b7c;
 }
 #cityInfoBox {
-background-color: #eff5f4;
+	background-color: #eff5f4;
+	position: relative;
 }
 #cityInfoBox img {
-	margin-left: 20px;
 	box-shadow: 5px 10px 10px rgba(140, 143, 149, 0.4);
 	background-color: #a6c6e9;
 	border-radius: 10px;
+	position: absolute;
+	top: 50px;
+	right: 100px;
 }
 
 #forecastBoxesWrapper {
-	margin-top: .5rem;
+	margin-top: 0.5rem;
 	padding: 0;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-} 
+}
 .dailyForecastBox {
-  padding:.8rem; 
+	padding: 0.8rem;
 	background-color: #007bff;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: .8rem;
+	font-size: 0.8rem;
 	color: white;
-  text-align: center;
+	text-align: center;
 	width: 20%;
 	height: auto;
-margin-left: 1rem;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+	margin-left: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+/* MEDIA QUERIES TO MAKE the Icon Responsive */
+@media screen and (min-width: 320px) and (max-width: 531px) {
+	#cityInfoBox {
+		text-align: center;
+	}
+	.dynamicH4 {
+		font-size: 0.9rem;
+	}
+	#cityInfoBox img {
+		position: static;
+		margin-top: 1rem;
+		height: 50%;
+		width: 50%;
+	}
+}
 
-  
-} 
+@media screen and (min-width: 532px) and (max-width: 767px) {
+	#cityInfoBox {
+		text-align: center;
+	}
+	#cityInfoBox img {
+		position: static;
+		margin-top: 1rem;
+	}
+}
+@media screen and (min-width: 990px) and (max-width: 1900px) {
+	.dynamicP {
+		font-size: 1rem;
+	}
+	.dynamicNote {
+		font-size: 0.8rem;
+	}
+	.dynamicH4 {
+		color: #007bff;
+		font-size: 1.2rem;
+	}
+}

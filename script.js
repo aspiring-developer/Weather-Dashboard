@@ -5,7 +5,7 @@ var todayDate = moment().format('LL'); // March 25, 2020 format
 
 // Required document ready function (wrapper) to use jQuery
 $(document).ready(function () {
-	// Function to display searched cities list
+	// Function to display searched cities list - local storage
 	function displayInList() {
 		// grab data from local storage
 		var cities = JSON.parse(localStorage.getItem('cities'));
@@ -21,7 +21,7 @@ $(document).ready(function () {
 	}
 	displayInList();
 
-	// Initially hiding alert message that set for no value entered in search field
+	// Initially hiding alert message that set for no value entered in citySearched field
 	$('#alertMessage').hide();
 	// Click handler of the search button
 	$('#searchButton').on('click', function () {
@@ -38,42 +38,43 @@ $(document).ready(function () {
 			cities = [citySearched];
 		}
 		localStorage.setItem('cities', JSON.stringify(cities));
-
-		// Conditionally keep hiding or showing the alert message
+// ########### First API Call for Current Day (One Day) Weather ##########
+// Conditionally keep it hiding or show the alert message
 		if (!citySearched) {
 			$('#alertMessage').show();
 		} else {
 			queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + citySearched + '&units=Imperial&appid=' + APIKey;
 			$('#alertMessage').hide();
 		}
-// $$$$$$$$$$$$$$$$$$$$$ CURRENTLY WORKING IN THIS SECTION $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		$.ajax({
+			url: queryURL,
+			method: 'GET'
+		}).then(function (response) {
+			var tempFromAPI = response.main.temp;
+			var kf_converter = (response.main.temp - 273.15) * 1.8 + 32;
+			var kf_converted = kf_converter.toFixed(2);
+			var currentHumidity = response.main.humidity;
+			var currentWindSpeed = response.wind.speed;
+			var currentWeatherIcon = response.weather[0].icon;
+			var currentIconURL = "<img src='http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png' />";
+			$('#cityInfoBox').append("<h4 class='dynamicH4'>" + response.name + " Current Weather" + currentIconURL + '</h4>');
+			$('#cityInfoBox').append("<p class='dynamicP'>" + 'Temperature in (F) : ' + tempFromAPI + '&deg;' + '</p>' + "<p class='dynamicP'>" + 'Temperature in (K) : ' + kf_converted + '&deg;' + '</p>' + "<p class='dynamicP'>" + 'Humidity : ' + currentHumidity + '%' + "<p class='dynamicP'>" + 'Wind Speed : ' + currentWindSpeed + ' MPH' + '</p>' + "<p class='dynamicP'>" + "<p class='dynamicNote'>" + '</p>');
 
-$.ajax({
-	url: queryURL,
-	method: 'GET'
-}).then(function (response) {
-// without looping works, but looping NO!!!!!!!!!!!!
-// $('#cityInfoBox').append("<h4 class='dynamicH4'>" +	response.name +	"'s" + '</h4>');
-// console.log(response.name);  // WORKING FINE HERE, BUT NOT INSIDE LOOP!!!!!!!!!!!
-	console.log(response);
-	console.log("working!!!!!!!!!!!!!!!!!!!!");
-		var tempFromAPI = response.main.temp;
-		var kf_converter = (response.main.temp - 273.15) * 1.8 + 32;
-		var kf_converted = kf_converter.toFixed(2);
-		var currentHumidity = response.main.humidity;
-		var currentWindSpeed = response.wind.speed;
-		var currentWeatherIcon = response.weather[0].icon;
-		var currentIconURL = "<img src='http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png' />";
-console.log(currentWeatherIcon);
-console.log(currentIconURL); 
-	// }
-	$('#cityInfoBox').append("<h4 class='dynamicH4'>" +	response.name +	" Current Weather" + currentIconURL + '</h4>');
-	$('#cityInfoBox').append("<p class='dynamicP'>"  +	'Temperature in (F) : ' +	tempFromAPI + '&deg;' + '</p>' + "<p class='dynamicP'>" +	'Temperature in (K) : ' +	kf_converted +	'&deg;' +	'</p>' + "<p class='dynamicP'>" +	'Humidity : ' +	currentHumidity +	'%' +	"<p class='dynamicP'>" +	'Wind Speed : ' +	currentWindSpeed +	' MPH' +'</p>' + "<p class='dynamicP'>" + 'UV Index : ' + tempFromAPI + "<p class='dynamicNote'>" +	'** F: Fahrenheit, K: Kelvin temperature measurement' + '</p>');
+		// ########### Third API Call for UV Index - Nested inside First API call to receive data from third one and populate the data along other weather values ##########
+			var latNumber = response.coord.lat;
+			var lonNumber = response.coord.lon;
+			var queryURL3 = 'https://api.openweathermap.org/data/2.5/uvi?appid=f3a53b113ee3edc1f98df25664c9486a&lat=' + latNumber + '&lon=' + lonNumber + '&appid=' + APIKey;
+				$.ajax({
+				url: queryURL3,
+				method: 'GET'
+			}).then(function (response) {
+				$('#cityInfoBox').append("<p class='dynamicP'>" + 'UV Index : ' + response.value + "<p class='dynamicNote'>" + '** F: Fahrenheit, K: Kelvin temperature measurement' + '</p>');
+				
+			}); // Third API call for UVIndex ends - nested in first API call
 
-});
+		}); // First API call ends 
 
-// $$$$$$$$$$$$$$$$$$$$$ CURRENTLY WORKING THE SECTION ABOVE $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-		// NEW API CALL for 5 Days
+		// ########### Second API Call for 5-Day Forecast ##########
 		var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + citySearched + '&appid=' + APIKey;
 		$.ajax({
 			url: queryURL2,
@@ -86,8 +87,6 @@ console.log(currentIconURL);
 			for (var i = 0; i < myList; i += 8) {
 				var dateFromAPI = response.list[i].dt_txt.substring(0, 10);
 				nextDayDate = moment(dateFromAPI).format('MM/DD/YYYY');
-				// console.log(response.list[i].weather[0].icon);
-				// console.log(response);
 				var kelvinConverter = (response.list[i].main.temp - 273.15) * 1.8 + 32;
 				var kelvinConverted = kelvinConverter.toFixed(2);
 				var humidityResult = response.list[i].main.humidity;
@@ -95,10 +94,8 @@ console.log(currentIconURL);
 				var iconURL = "<img src='http://openweathermap.org/img/wn/" + weatherIcons + "@2x.png' />";
 				$('#forecastBoxesWrapper').append("<div class='dailyForecastBox'>" + '<p>' + nextDayDate + '</p>' + '<p>' + iconURL + '</p>' + '<p>' + 'Temp: ' + kelvinConverted + '&deg;' + '</p>' + '<p>' + 'Humidity: ' + humidityResult + '%' + '</p>' + "</div>");
 			}
-		});
-		// NEW API CALL ABOVE
+		}); // Second API call ends 
 
+	}); // on click event handler ends 
 
-				
-	});
 }); // document ready function (wrapper) ends here.
