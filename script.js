@@ -1,4 +1,4 @@
-// Initializing variables
+// Storing API Key into variable
 var APIKey = 'f3d5f98330d1862e11ba7e4f8ac70fbb'; // Personal API key from https://openweathermap.org/api
 var queryURL = '';
 var todayDate = moment().format('LL'); // March 25, 2020 format
