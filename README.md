@@ -8,3 +8,6 @@ This weather dashboard was built using a third-party server-side API called Open
 - Similarly, this app is able to show 5-day forecast of the searched city on the bottom section where user can see dates, weather related icons, temperature in fahrenheit and humidity percentage. 
 - This app is also able to save the searched city name(s) as a list. The list is stored in browser's local storage. The list will display in the top left section, below the search field.
 - This project was a great learning opportunity! After doing this, I have built some confidentiality working with Javascript, jQuery and AJAX.
+
+
+The link to the deployed page: https://ssh1sharma.github.io/Weather-Dashboard/
