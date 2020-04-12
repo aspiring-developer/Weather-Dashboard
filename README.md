@@ -1,4 +1,4 @@
-# 06 Server-Side APIs: Weather Dashboard
+Weather Dashboard
 
 This weather dashboard was built using a third-party server-side API called Open Weather API. 
 ## Functionality:
