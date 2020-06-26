@@ -20,7 +20,6 @@ $(document).ready(function () {
 		}
 	}
 	displayInList();
-
 	// Initially hiding alert message that set for no value entered in citySearched field
 	$('#alertMessage').hide();
 	// Click handler of the search button
