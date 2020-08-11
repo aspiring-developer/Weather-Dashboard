@@ -12,7 +12,7 @@ This weather dashboard was built using a third-party server-side API called Open
 ### App UI Screenshot:
 `.....................`
 
-![Weather-dashboard App Screenshot Image](https://github.com/ssh1sharma/Weather-Dashboard/blob/40235a1addb1a9197cc0343cda2170995b9ffacd/final.JPG)
+![Weather-dashboard App Screenshot Image](https://github.com/ssh1sharma/Weather-Dashboard/blob/master/final.JPG)
 
 - This project was a great learning opportunity! After doing this, I built some confidentiality working with Javascript, jQuery and AJAX.
 
